@@ -1,7 +1,8 @@
-import TWEEN from "@tweenjs/tween.js";
+import * as PIXI from "pixi.js";
+import TWEEN, { Group } from "@tweenjs/tween.js";
 import { Globals } from "./Globals";
 import { Scene } from "./Scene";
-import * as PIXI from "pixi.js";
+import { log } from "node:console";
 
 export class SceneManager {
 
@@ -20,33 +21,35 @@ export class SceneManager {
 
         SceneManager.instance = this;
 
-
         this.container = new PIXI.Container();
         this.scene = null;
     }
 
 
     start(scene: Scene) {
-
         if (this.scene) {
             this.scene.destroyScene();
             this.scene = null;
+        
         }
 
 
 
         this.scene = scene;
-        this.scene.initScene(this.container)
-        // this.container.addChild(this.scene.sceneContainer);
-
-
-        if (window.orientation == 90 || window.orientation == -90) {
-
-            //orientation
-        }
+        this.scene.initScene(this.container);
     }
+    getMousePosition(callback: (data: { x: number; y: number }) => void): void {
+  
+          
+          this.container.interactive = true;
+          this.container.on("pointermove", (event) => {
+              
+              callback({ x: event.global.x, y: event.global.y });
+          });
+      }
 
     update(dt: number) {
+       
         TWEEN.update();
 
         if (this.scene && this.scene.update) {

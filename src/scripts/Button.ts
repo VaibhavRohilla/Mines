@@ -1,56 +1,37 @@
+import { Tween } from "@tweenjs/tween.js";
 import { Graphics, Resource, Sprite, Texture } from "pixi.js";
-import { TextLabel } from "./TextLabel";
+import { Globals } from "./Globals";
 
 
-export class ButtonS extends Sprite {
-    buttonLabel: TextLabel;
 
 
-    constructor(texture: Texture<Resource> | undefined, text: string, position: { x: number, y: number }, color: number = 0xffffff, onPointerDown: any | undefined) {
-        super(texture);
 
-        this.interactive = true;
+export class Button extends Sprite
+{
+
+    // mask : Graphics = new Graphics();
+    constructor(Texture : Texture<Resource> | undefined , public CallBack : ()=>void)
+    {
+        super(Texture);
         this.anchor.set(0.5);
-        this.tint = color;
-        this.buttonLabel = new TextLabel(this.width / 2, this.height / 2, 0.5, text, 42, color);
-        this.x = position.x;
-        this.y = position.y;
-        this.addChild(this.buttonLabel);
-
-        this.on("pointerdown", () => { onPointerDown(); })
+        this.setActive(true);
+        this.on("pointerdown", this.onPointerDown.bind(this));
+    }
+    onPointerDown()
+    {
+        this.CallBack();
+        this.setActive(false);
+        new Tween(this.scale).to({x:this.scale.x*0.8,y:this.scale.y*0.8},100)
+        .yoyo(true)
+        .repeat(1)
+        .onComplete(()=>{this.setActive(true)})
+        .start();
     }
 
-    setActive(active: boolean) {
-
-        this.renderable = active;
+    setActive(active : boolean)
+    {
         this.interactive = active;
+        this.alpha = active ? 1 : 0.5;
+        this.cursor =  active ?'pointer' : '';
     }
-
-}
-export class ButtonG extends Graphics {
-    buttonLabel: TextLabel;
-
-
-    constructor(Color: number, alpha: number, text: string, position: { x: number, y: number }, TextColor: number = 0xffffff, onPointerDown: any | undefined) {
-        super();
-
-        this.beginFill(Color, alpha);
-        this.drawRoundedRect(0, 0, 180, 100, 20);
-        this.endFill();
-        this.interactive = true;
-        this.buttonLabel = new TextLabel(this.width / 2, this.height / 2, 0.5, text, 42, TextColor);
-        this.x = position.x;
-        this.y = position.y;
-        this.buttonMode = true;
-
-        this.addChild(this.buttonLabel);
-
-        this.on("pointerdown", () => { onPointerDown(); })
-    }
-
-    setActive(active: boolean) {
-        this.renderable = active;
-        this.interactive = active;
-    }
-
 }

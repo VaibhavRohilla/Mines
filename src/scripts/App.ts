@@ -6,7 +6,6 @@ import { MainScene } from './MainScene';
 import { MyEmitter } from './MyEmitter';
 import { Scene } from './Scene';
 import { SceneManager } from './SceneManager';
-import { levelStars } from './LevelLib/GlobalLevelVar';
 // import { Loader } from "./Loader";
 // import { SceneManager } from "./SceneManager";
 // import { MainScene } from "./MainScene";
@@ -37,7 +36,7 @@ export class App {
         this.app.renderer.view.style.width = `${window.innerWidth}px`;
         this.app.renderer.view.style.height = `${window.innerHeight}px`;
         this.app.renderer.resize(window.innerWidth, window.innerHeight);
-
+        PIXI.MIPMAP_MODES.ON;
         this.app.view.oncontextmenu = (e) => {
             e.preventDefault();
 
@@ -97,9 +96,7 @@ export class App {
 
         loader.preloadSounds();
 
-        for (let i = 0; i < 32; i++) {
-            levelStars.push(0);
-        }
+       
     }
 
     tabChange() {

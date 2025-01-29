@@ -41,7 +41,7 @@ export class BackgroundGraphic extends PIXI.Graphics
     {
         this.clear();
         this.beginFill(this.defaultProperties.color, 1);
-        this.drawRect(0, 0, this.defaultProperties.width, this.defaultProperties.height);
+        this.drawRect(0, 0, this.defaultProperties.width*5, this.defaultProperties.height*5);
         this.endFill();
     }
 
@@ -89,6 +89,8 @@ export class BackgroundSprite extends PIXI.Sprite
 
     resetBg(width : number | null = null , height : number | null = null)
     {
+       
+        
         if(width != null)
             this.defaultProperties.width = width;
         

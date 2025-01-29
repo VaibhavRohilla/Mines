@@ -5,7 +5,7 @@ export class TextLabel extends  Text
 {
 
 
-    constructor(x : number, y : number, anchor :number, textToShow :string ,size : number, public defaultColor :number =  0xff7f50, font : string = "FredokaOne") {
+    constructor(x : number, y : number, anchor :number, textToShow :string ,size : number, public defaultColor :number =  0xff7f50, font : string = "Quicksand") {
         super(textToShow);
 
         this.x = x;
